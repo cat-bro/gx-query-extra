@@ -8,6 +8,7 @@ source $HERE/query-jobs-by-tool2.sh
 source $HERE/query-jobs-by-tool-stderr.sh
 source $HERE/query-jobs-by-tool-stdout.sh
 source $HERE/query-time-size-by-tool.sh
+source $HERE/query-jobs-tool-and-stderr.sh
 
 source $HERE/job_errors/query-job-info.sh
 source $HERE/job_errors/query-job-stdout.sh
