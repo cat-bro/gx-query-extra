@@ -1,5 +1,5 @@
 local_query-jobs-tool-and-stderr() { ## input tool substr,  stderr substr, optional limit
-    tool_substr = "$1"
+    tool_substr="$1"
 	tool_stderr_substr="$2"
     limit="$3"
 	[ ! "$3" ] && limit="50" || limit="$3"
