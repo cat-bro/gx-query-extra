@@ -2,7 +2,7 @@ local_query-jobs-tool-and-stderr() { ## input tool substr,  stderr substr, optio
     tool_substr = "$1"
 	tool_stderr_substr="$2"
     limit="$3"
-	[ ! "$2" ] && limit="50" || limit="$2"
+	[ ! "$3" ] && limit="50" || limit="$3"
 	handle_help "$@" <<-EOF
 	EOF
 
