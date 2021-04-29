@@ -73,6 +73,7 @@ local_query-jobs-tool-has-stderr-command() { ## input tool substr,  stderr subst
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				j.id as job_id,
+				j.command_line,
 				j.create_time as created,
 				j.state as state,
 				j.tool_id as tool_id,
