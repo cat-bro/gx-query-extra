@@ -9,7 +9,7 @@ local_query-time-size-by-tool() { ##? <tool> input tool substr,  # optional <lim
 			SELECT
 				j.id as job_id,
 				j.create_time as created,
-				j.create_time as created,
+				j.update_time as updated,
 				(
 					(SELECT MIN(jsh.create_time) FROM job_state_history jsh
 					WHERE jsh.job_id = j.id AND jsh.state = 'running') -
