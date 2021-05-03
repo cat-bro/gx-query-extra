@@ -10,6 +10,12 @@ local_query-jobs-tool-and-stderr() { ## input tool substr,  stderr substr, optio
 			SELECT
 				j.id as job_id,
 				j.create_time as created,
+				(
+					(SELECT MIN(jsh.create_time) FROM job_state_history jsh
+					WHERE jsh.job_id = j.id AND jsh.state in ('error', 'deleted', 'ok')) -
+					(SELECT MIN(jsh.create_time) FROM job_state_history jsh
+					WHERE jsh.job_id = j.id AND jsh.state = 'running')
+				) as run_time,
 				j.state as state,
 				j.tool_id as tool_id,
 				(
