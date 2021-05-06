@@ -16,7 +16,7 @@ local_query-new-job-sizes() { ##? <tool> input tool substr,  # optional <limit>
 					WHERE hda.dataset_id = d.id
 					AND jtid.job_id = j.id
 					AND hda.id = jtid.dataset_id
-				) as sum_input_size,
+				) as sum_input_size
 			FROM job j, galaxy_user u
 			WHERE j.user_id = u.id
 			AND position('$tool_substr' in j.tool_id)>0
