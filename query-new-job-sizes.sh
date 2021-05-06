@@ -19,7 +19,7 @@ local_query-new-job-sizes() { ##? <tool> input tool substr,  # optional <limit>
 				) as sum_input_size
 			FROM job j, galaxy_user u
 			WHERE j.user_id = u.id
-			AND position('$tool_substr' in j.tool_id)>0
+            AND j.state = 'new'
 			ORDER BY j.create_time desc
 
 	EOF
