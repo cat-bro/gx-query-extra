@@ -16,7 +16,7 @@ local_query-training-members() { ##? <tr_id>: List users in a specific training
 
 	read -r -d '' QUERY <<-EOF
 			SELECT DISTINCT ON (COALESCE(galaxy_user.username::text, '__UNKNOWN__') as username)
-				(COALESCE(galaxy_user.username::text, '__UNKNOWN__') as username),
+				username,
 				date_trunc('second', user_group_association.create_time AT TIME ZONE 'UTC') as joined
 			FROM galaxy_user, user_group_association, galaxy_group
 			WHERE galaxy_group.name = 'training-$ww'
