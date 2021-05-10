@@ -1,6 +1,6 @@
 HERE=${BASH_SOURCE%/*}
 
-source $HERE/../functions/gdpr_safe.sh
+source $HERE/functions/gdpr_safe.sh
 
 local_query-training-members() { ##? <tr_id>: List users in a specific training
 	handle_help "$@" <<-EOF
