@@ -15,8 +15,8 @@ local_query-training-members() { ##? <tr_id>: List users in a specific training
 	username=$(gdpr_safe galaxy_user.username username)
 
 	read -r -d '' QUERY <<-EOF
-			SELECT DISTINCT ON ($username)
-				$username,
+			SELECT DISTINCT ON (COALESCE(galaxy_user.username::text, 'username') as $2)
+				(COALESCE(galaxy_user.username::text, 'username') as $2),
 				date_trunc('second', user_group_association.create_time AT TIME ZONE 'UTC') as joined
 			FROM galaxy_user, user_group_association, galaxy_group
 			WHERE galaxy_group.name = 'training-$ww'

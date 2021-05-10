@@ -18,4 +18,4 @@ source $HERE/job_errors/query-job-stderr.sh
 source $HERE/job_errors/query-tool-stdout.sh
 source $HERE/job_errors/query-tool-stderr.sh
 
-source $HERE/function/gdpr_safe.sh
+# source $HERE/function/gdpr_safe.sh
