@@ -11,14 +11,14 @@ local_query-training-members() { ##? <tr_id>: List users in a specific training
 	EOF
 
 	# Remove training- if they used it.
-	ww=$(echo "$arg_tr_id" | sed 's/^training-//g')
+	# ww=$(echo "$arg_tr_id" | sed 's/^training-//g')
 	username=$(gdpr_safe galaxy_user.username username)
 
 	read -r -d '' QUERY <<-EOF
 			SELECT COALESCE(galaxy_user.username) as username,
 				date_trunc('second', user_group_association.create_time AT TIME ZONE 'UTC') as joined
 			FROM galaxy_user, user_group_association, galaxy_group
-			WHERE galaxy_group.name = 'training-$ww'
+			WHERE position('training' in galaxy_group.name) > 0
 				AND galaxy_group.id = user_group_association.group_id
 				AND user_group_association.user_id = galaxy_user.id
 	EOF
