@@ -17,6 +17,7 @@ local_query-training-members2() { ##? <tr_id>: List users in a specific training
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				galaxy_user.username,
+                galaxy_user.id,
 				date_trunc('second', user_group_association.create_time AT TIME ZONE 'UTC') as joined
 			FROM galaxy_user, user_group_association, galaxy_group, role, group_role_association
 			WHERE galaxy_group.name = 'training-$ww'
