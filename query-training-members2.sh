@@ -1,6 +1,7 @@
 #select distinct u.username, g.name, g.create_time from galaxy_user u, role r, galaxy_group g, group_role_association gra, user_group_association uga where gra.group_id = g.id and gra.role_id = r.id and uga.group_id = g.id and uga.user_id = u.id and position('training' in g.name)>0 and g.deleted = 'f'  and r.deleted = 'f' order by g.create_time;
 
 local_query-training-members2() { ##? <tr_id>: List users in a specific training
+    arg_tr_id="$1" # not necessary in normal gxadmin, just local queries
 	handle_help "$@" <<-EOF
 		    $ gxadmin query training-members hts2018
 		          username      |       joined
