@@ -3,6 +3,7 @@ HERE=${BASH_SOURCE%/*}
 # source $HERE/functions/gdpr_safe.sh
 
 local_query-training-members() { ##? <tr_id>: List users in a specific training
+	arg_tr_id="$1" # not necessary in normal gxadmin, just local queries
 	handle_help "$@" <<-EOF
 		    $ gxadmin query training-members hts2018
 		          username      |       joined
@@ -11,14 +12,15 @@ local_query-training-members() { ##? <tr_id>: List users in a specific training
 	EOF
 
 	# Remove training- if they used it.
-	# ww=$(echo "$arg_tr_id" | sed 's/^training-//g')
+	ww=$(echo "$arg_tr_id" | sed 's/^training-//g')
 	username=$(gdpr_safe galaxy_user.username username)
 
 	read -r -d '' QUERY <<-EOF
-			SELECT COALESCE(galaxy_user.username) as username,
+			SELECT DISTINCT ON ($username)
+				$username,
 				date_trunc('second', user_group_association.create_time AT TIME ZONE 'UTC') as joined
 			FROM galaxy_user, user_group_association, galaxy_group
-			WHERE position('training' in galaxy_group.name) > 0
+			WHERE galaxy_group.name = 'training-$ww'
 				AND galaxy_group.id = user_group_association.group_id
 				AND user_group_association.user_id = galaxy_user.id
 	EOF
