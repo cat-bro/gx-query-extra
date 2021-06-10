@@ -6,6 +6,7 @@ source $HERE/query-jobs-by-dest2.sh
 source $HERE/query-jobs-by-tool.sh
 source $HERE/query-jobs-by-tool2.sh
 source $HERE/query-jobs-by-tool-stderr.sh
+source $HERE/query-jobs-by-info.sh
 source $HERE/query-jobs-by-tool-stdout.sh
 source $HERE/query-time-size-by-tool.sh
 source $HERE/query-jobs-tool-and-stderr.sh
