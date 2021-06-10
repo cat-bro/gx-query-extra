@@ -20,7 +20,7 @@ local_query-time-size-by-tool() { ##? <tool> input tool substr,  # optional <lim
 					(SELECT MIN(jsh.create_time) FROM job_state_history jsh
 					WHERE jsh.job_id = j.id AND jsh.state in ('error', 'deleted', 'ok')) -
 					(SELECT MAX(jsh.create_time) FROM job_state_history jsh
-					WHERE jsh.job_id = j.id AND jsh.state = ('new', 'queued', 'running'))
+					WHERE jsh.job_id = j.id AND jsh.state in ('running'))
 				) as run_time,
 				u.username,
 				j.state as state,
