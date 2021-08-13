@@ -1,4 +1,4 @@
-local_query-time-size-by-tool() { ##? <tool> input tool substr,  # optional <limit>
+local_query-time-size-by-dest() { ##? <tool> input tool substr,  # optional <limit>
 	dest_substr="$1"
 	[ ! "$2" ] && limit="10" || limit="$2"
 	handle_help "$@" <<-EOF
