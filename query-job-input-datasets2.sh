@@ -20,7 +20,7 @@ local_query-job-input-datasets2() { ##? <id>: Job ID
                 hda.extension AS extension,
 				d.id AS d_id,
 				d.state AS d_state,
-                d.create_time AS d_created
+                d.create_time AS d_created,
 				pg_size_pretty(d.file_size) AS d_file_size,
 				pg_size_pretty(d.total_size) AS d_total_size
 			FROM job j
