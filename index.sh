@@ -13,6 +13,7 @@ source $HERE/query-time-size-by-dest.sh
 source $HERE/query-jobs-tool-and-stderr.sh
 source $HERE/query-jobs-tool-and-stdout.sh
 source $HERE/query-new-job-sizes.sh
+source $HERE/query-job-input-datasets2.sh
 source $HERE/query-job-output-datasets.sh
 source $HERE/query-training-members.sh
 source $HERE/query-training-members2.sh
