@@ -11,8 +11,8 @@ local_query-jobs-by-tool-stderr2() { ## input destination substr,  # optional li
 				j.state as state,
 				j.tool_id as tool_id,
 				j.destination_id as destination,
-                (SELECT FIRST(SELECT jmt.metric_value from job_metric_text jmt where 
-                jmt.metric_name = 'HOSTNAME')) as hostname,
+                (SELECT jmt.metric_value from job_metric_text jmt where 
+                jmt.metric_name = 'HOSTNAME' and jmt.job_id = j.id) as hostname,
 			FROM job j
 			WHERE position('$tool_stderr_substr' in j.tool_stderr)>0
 			ORDER BY j.create_time desc
