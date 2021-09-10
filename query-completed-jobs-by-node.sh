@@ -1,4 +1,4 @@
-local_completed-jobs-by-node() { ## input limit,  # optional string of more clauses
+local_query-completed-jobs-by-node() { ## input limit,  # optional string of more clauses
     host_name="$1"
 	[ ! "$2" ] && limit="50" || limit="$2"
 	# [ ! "$2" ] || more_clauses="AND $2"
