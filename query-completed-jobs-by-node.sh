@@ -20,7 +20,7 @@ local_completed-jobs-by-node() { ## input limit,  # optional string of more clau
 			AND jmt.job_id = j.id
 			AND jmt.metric_name = 'HOSTNAME'
             AND j.state in ('ok', 'deleted', 'error')
-            AND hostname = $host_name
+            AND jmt.metric_value = $host_name
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
