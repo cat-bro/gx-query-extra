@@ -14,7 +14,7 @@ local_query-completed-jobs-by-node() { ## input limit,  # optional string of mor
 				j.state as state,
 				j.tool_id as tool_id,
 				j.destination_id as destination,
-				jmt.metric_value as node,
+				jmt.metric_value as node
 			FROM job j, galaxy_user u, job_metric_text jmt
 			WHERE j.user_id = u.id
 			AND jmt.job_id = j.id
