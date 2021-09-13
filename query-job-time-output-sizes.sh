@@ -1,5 +1,5 @@
 local_query-job-time-output-sizes() { ##? <tool> input tool substr,  # optional <limit>
-	datetime = "$1"
+	datetime="$1"
 	handle_help "$@" <<-EOF
 	EOF
 
