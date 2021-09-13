@@ -22,6 +22,7 @@ source $HERE/query-job-input-datasets2.sh
 source $HERE/query-job-output-datasets.sh
 source $HERE/query-training-members.sh
 source $HERE/query-training-members2.sh
+source $HERE/query-job-time-output-sizes.sh
 
 source $HERE/job_errors/query-job-info.sh
 source $HERE/job_errors/query-job-stdout.sh
