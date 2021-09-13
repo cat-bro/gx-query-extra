@@ -7,7 +7,7 @@ local_query-job-time-output-sizes() { ##? <tool> input tool substr,  # optional 
 			SELECT
 				j.id as job_id,
 				j.create_time as created,
-                j.update_time as updated
+                j.update_time as updated,
 				u.username,
 				j.state as state,
 				j.tool_id as tool_id,
