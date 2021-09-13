@@ -6,6 +6,8 @@ local_query-job-time-output-sizes() { ##? <tool> input tool substr,  # optional 
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				j.id as job_id,
+				hda.id as hda_id,
+				d.id as dataset_id,
 				j.create_time as created,
                 j.update_time as updated,
 				u.username,
@@ -20,6 +22,7 @@ local_query-job-time-output-sizes() { ##? <tool> input tool substr,  # optional 
 			AND j.update_time > '$datetime'
 			AND jtod.dataset_id = hda.id
 			AND hda.dataset_id = d.id
+			AND j.state in ('queued', 'running', 'ok')
 			ORDER BY j.create_time desc
 
 	EOF
