@@ -16,8 +16,8 @@ local_query-job-time-output-sizes() { ##? <tool> input tool substr,  # optional 
 			FROM job_to_output_dataset jtod, dataset d, job j, galaxy_user u
 			WHERE j.user_id = u.id
             AND jtod.job_id = j.id
-            AND j.create_time < '$datetime'
-			AND j.update_time > '$datetime'
+            AND j.create_time < "$datetime"
+			AND j.update_time > "$datetime"
 			AND jtod.dataset_id = d.id
 			ORDER BY j.create_time desc
 
