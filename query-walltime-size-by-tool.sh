@@ -13,7 +13,12 @@ local_query-walltime-size-by-tool() { ##? <tool> input tool substr,  # optional 
 				u.username,
 				j.state as state,
 				j.tool_id as tool_id,
-                TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS') as runtime,
+                (SELECT 
+                    TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS')
+                    FROM job_metric_numeric jmn
+                    WHERE jmn.metric_name = 'runtime_seconds'
+                    AND jmn.job_id = j.id
+                ) as runtime,
 				(
 					SELECT
 					pg_size_pretty(SUM(d.total_size))
