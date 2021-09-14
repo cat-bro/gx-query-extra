@@ -1,4 +1,4 @@
-local_query-1slot-jobs-by-walltime() { ## input seconds,  # optional limit
+local_query-1slot-jobs-by-walltime() { ##? <runtime_seconds> minimum runtime in seconds,  # optional <limit>
     walltime_seconds="$1"
 	[ ! "$2" ] && limit="50" || limit="$2"
 

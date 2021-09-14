@@ -4,8 +4,8 @@ local_query-walltime-size-by-tool() { ##? <tool> input tool substr,  # optional 
 	handle_help "$@" <<-EOF
 
     Produces a table with input size and running times for a given tool, provided as the first argument.
-    The argument is a substring of the tool_id e.g. `trinity`, `trinity/2.9.1+galaxy1`, `Count1`.  An
-    optional second argument is the number of rows to return (default 50).
+    The argument is a substring of the tool_id e.g. trinity, trinity/2.9.1+galaxy1, Count1.  The second
+    argument is the number of rows to return (optional, default: 50).
 
     gxadmin local query-walltime-size-by-tool busco 5
      job_id  |          created           |          updated           |   username    |  state  |                          tool_id                           | runtime  | sum_input_size | destination
