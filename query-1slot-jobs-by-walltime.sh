@@ -10,7 +10,7 @@ local_query-1slot-jobs-by-walltime() { ## input seconds,  # optional limit
             jmn.job_id as job_id,
             j.tool_id as tool_id,
             jmn.metric_value as runtime_seconds,
-            TO_CHAR((jmm.metric_value || ' second')::interval, 'HH24:MI:SS') as runtime,
+            TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS') as runtime,
             (
                 SELECT
                 pg_size_pretty(SUM(d.total_size))
