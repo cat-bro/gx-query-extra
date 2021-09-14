@@ -8,6 +8,7 @@ local_query-1slot-jobs-by-walltime() { ## input seconds,  # optional limit
 	read -r -d '' QUERY <<-EOF
         SELECT
             jmn.job_id as job_id,
+            j.update_time as update_time,
             j.tool_id as tool_id,
             TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS') as runtime,
             (
