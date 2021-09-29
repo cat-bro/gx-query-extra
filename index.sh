@@ -25,6 +25,7 @@ source $HERE/query-training-members2.sh
 source $HERE/query-job-time-output-sizes.sh
 source $HERE/query-1slot-jobs-by-walltime.sh
 source $HERE/query-walltime-size-by-tool.sh
+source $HERE/query-jobs-running-at-datetime.sh
 
 source $HERE/job_errors/query-job-info.sh
 source $HERE/job_errors/query-job-stdout.sh
