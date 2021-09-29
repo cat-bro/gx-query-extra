@@ -13,8 +13,7 @@ local_query-jobs-running-at-datetime() {
 				j.tool_id as tool_id,
                 j.destination_id as destination_id
 			FROM job j
-			WHERE j.user_id = u.id
-            AND j.create_time < '$datetime'
+            WHERE j.create_time < '$datetime'
 			AND j.update_time > '$datetime'
 			AND j.state in ('queued', 'running', 'ok')
 			ORDER BY j.create_time desc
