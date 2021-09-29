@@ -27,7 +27,7 @@ local_query-jobs-running-at-datetime() { ##? <datetime> datetime string
 			FROM job j
             WHERE j.create_time < '$datetime'
 			AND j.update_time > '$datetime'
-			AND j.state in ('queued', 'running', 'ok')
+			AND j.state in ('queued', 'running', 'ok', 'error')
 			ORDER BY j.create_time desc
 	EOF
 }
