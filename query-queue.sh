@@ -50,7 +50,7 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
 			job.handler,
             (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
             (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
-            COALESCE((REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'partition=(\d+)'))[1], 'main') as partition,
+            (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'partition=(\d+)'))[1] as partition,
 			COALESCE(job.destination_id, 'none') as destination_id
 		FROM job
 		FULL OUTER JOIN galaxy_user ON job.user_id = galaxy_user.id
