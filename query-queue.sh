@@ -41,11 +41,11 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
         json_string="$1"
         [ "$2" ] && type="$2" || type="all"
         params=$(jq -r '.nativeSpecification' <<< '$json_string')
-        return params
+        return 'abc'
     }
 
 	username=$(gdpr_safe galaxy_user.username username "Anonymous User")
-    dest_params=$(process_dest_params "ENCODE(job.destination_params, 'escape')")
+    dest_params=$(process_dest_params "ENCODE(job.destination_params, 'escape')" ntasks)
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
