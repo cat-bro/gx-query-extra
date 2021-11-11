@@ -49,7 +49,7 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
 			$nonpretty now() AT TIME ZONE 'UTC' - $time_column) as $time_column_name,
 			job.handler,
 			job.job_runner_name,
-            ENCODE(j.destination_params, 'escape') as destination_params,
+            ENCODE(job.destination_params, 'escape') as destination_params,
 			COALESCE(job.destination_id, 'none') as destination_id
 		FROM job
 		FULL OUTER JOIN galaxy_user ON job.user_id = galaxy_user.id
