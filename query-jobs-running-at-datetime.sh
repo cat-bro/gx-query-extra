@@ -3,7 +3,7 @@ local_query-jobs-running-at-datetime() { ##? <datetime> datetime string
 	handle_help "$@" <<-EOF
 
     Find all jobs in queued, running or ok state that were created before and updated after a given datetime.  This was written with the aim of finding
-    non-deleted jobs that may have two sets of data files due to the hierarchical object store path having changed while they were running.
+    non-deleted jobs that may have two sets of data files due to the hierarchical object store path having changed while they were queued or running.
 
     $ gxadmin local query-jobs-running-at-datetime "2021-09-28 14:00"
      job_id  |          created           |          updated           | user_id | state |                                   tool_id                                   | destination_id
