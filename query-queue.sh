@@ -49,8 +49,8 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
 			$nonpretty now() AT TIME ZONE 'UTC' - $time_column) as $time_column_name,
 			job.handler,
 			job.job_runner_name,
-            (REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
-            (REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
+            (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
+            (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
 			COALESCE(job.destination_id, 'none') as destination_id
 		FROM job
 		FULL OUTER JOIN galaxy_user ON job.user_id = galaxy_user.id
