@@ -37,15 +37,7 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
 		time_column_name="time_since_update"
 	fi
 
-    process_dest_params() { # wrap the arg in quotes
-        json_string="$1"
-        [ "$2" ] && type="$2" || type="all"
-        params=$(jq -r '.nativeSpecification' <<< '$json_string')
-        echo 'abc'
-    }
-
 	username=$(gdpr_safe galaxy_user.username username "Anonymous User")
-    dest_params=$(process_dest_params "ENCODE(job.destination_params, 'escape')" ntasks)
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
@@ -57,7 +49,8 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
 			$nonpretty now() AT TIME ZONE 'UTC' - $time_column) as $time_column_name,
 			job.handler,
 			job.job_runner_name,
-            $dest_params,
+            (REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
+            (REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
 			COALESCE(job.destination_id, 'none') as destination_id
 		FROM job
 		FULL OUTER JOIN galaxy_user ON job.user_id = galaxy_user.id
