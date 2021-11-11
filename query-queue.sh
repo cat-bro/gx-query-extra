@@ -41,7 +41,7 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
         json_string="$1"
         [ "$2" ] && type="$2" || type="all"
         params=$(jq -r '.nativeSpecification' <<< '$json_string')
-        return 'abc'
+        echo 'abc'
     }
 
 	username=$(gdpr_safe galaxy_user.username username "Anonymous User")
