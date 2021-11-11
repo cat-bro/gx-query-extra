@@ -45,7 +45,7 @@ local_query-queue() { ##? [--all] [--seconds] [--since-update]: Detailed overvie
     }
 
 	username=$(gdpr_safe galaxy_user.username username "Anonymous User")
-    dest_params=$(process_dest_params ENCODE(job.destination_params, 'escape'))
+    dest_params=$(process_dest_params "ENCODE(job.destination_params, 'escape')")
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
