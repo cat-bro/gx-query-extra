@@ -20,7 +20,6 @@ local_query-walltime-size-by-tool-with-info() { ##? <tool> input tool substr,  #
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				j.id as job_id,
-				j.create_time as created,
 				j.update_time as updated,
 				j.user_id as user_id,
 				j.state as state,
