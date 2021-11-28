@@ -39,6 +39,8 @@ local_query-walltime-size-by-tool-with-info() { ##? <tool> input tool substr,  #
 					AND hda.id = jtid.dataset_id
 				) as sum_input_size,
 				j.destination_id as destination,
+                (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
+                (REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
                 j.info as info
 			FROM job j
 			WHERE position('$tool_substr' in j.tool_id)>0
