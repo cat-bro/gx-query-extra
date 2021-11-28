@@ -42,8 +42,7 @@ local_query-walltime-size-by-tool-with-info() { ##? <tool> input tool substr,  #
 				j.destination_id as destination,
                 j.info as info
 			FROM job j
-			WHERE j.user_id = u.id
-			AND position('$tool_substr' in j.tool_id)>0
+			WHERE position('$tool_substr' in j.tool_id)>0
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
