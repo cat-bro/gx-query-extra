@@ -16,7 +16,8 @@ local_query-jobs-by-dest2() { ## input destination substr,  # optional limit
 				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
-			FROM job j, galaxy_user u
+			FROM job j
+			FULL OUTER JOIN galaxy_user u ON j.user_id = u.id
 			WHERE j.user_id = u.id
 			AND position('$dest_substr' in j.destination_id)>0
 			ORDER BY j.update_time desc
