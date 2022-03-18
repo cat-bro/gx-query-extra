@@ -15,6 +15,7 @@ source $HERE/query-time-size-by-tool.sh
 source $HERE/query-time-size-by-dest.sh
 source $HERE/query-jobs-tool-and-stderr.sh
 source $HERE/query-jobs-tool-and-stdout.sh
+source $HERE/query-jobs-tool-and-traceback.sh
 source $HERE/query-new-job-sizes.sh
 source $HERE/query-queued-job-sizes.sh
 source $HERE/query-job-input-datasets2.sh
