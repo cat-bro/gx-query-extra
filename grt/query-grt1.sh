@@ -26,6 +26,12 @@ local_query-grt1() { ##? <tool> input tool substr,  # optional <limit>
                 (SELECT 
                     TO_CHAR((jmn.value || ' second')::interval, 'HH24:MI:SS')
                     FROM api_metricnumeric jmn
+                    WHERE jmn.name = 'galaxy_slots'
+                    AND jmn.external_job_id = j.external_job_id
+                ) as cores,
+                (SELECT 
+                    TO_CHAR((jmn.value || ' second')::interval, 'HH24:MI:SS')
+                    FROM api_metricnumeric jmn
                     WHERE jmn.name = 'runtime_seconds'
                     AND jmn.external_job_id = j.external_job_id
                 ) as runtime,
