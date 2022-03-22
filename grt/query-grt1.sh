@@ -24,7 +24,7 @@ local_query-grt1() { ##? <tool> input tool substr,  # optional <limit>
 				j.state as state,
 				j.tool_id as tool_id,
                 (SELECT 
-                    TO_CHAR((jmn.value || ' second')::interval, 'HH24:MI:SS')
+                    jmn.value
                     FROM api_metricnumeric jmn
                     WHERE jmn.name = 'galaxy_slots'
                     AND jmn.external_job_id = j.external_job_id
