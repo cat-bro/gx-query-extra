@@ -24,14 +24,14 @@ local_query-grt1() { ##? <tool> input tool substr,  # optional <limit>
 				j.state as state,
 				j.tool_id as tool_id,
                 (SELECT 
-                    TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS')
+                    TO_CHAR((jmn.value || ' second')::interval, 'HH24:MI:SS')
                     FROM api_metricnumeric jmn
-                    WHERE jmn.metric_name = 'runtime_seconds'
+                    WHERE jmn.name = 'runtime_seconds'
                     AND jmn.external_job_id = j.external_job_id
                 ) as runtime,
 				(
 					SELECT
-					pg_size_pretty(SUM(d.total_size))
+					pg_size_pretty(SUM(d.file_size))
 					FROM api_dataset d
 					WHERE d.external_job_id = j.external_job_id
 				) as sum_input_size
