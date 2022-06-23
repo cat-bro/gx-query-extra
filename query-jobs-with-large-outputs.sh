@@ -16,7 +16,7 @@ local_query-jobs-with-large-outputs() { ##? <tool> input tool substr,  # optiona
 				(
 					SELECT
 					SUM(d.total_size)
-					FROM dataset d, history_dataset_association hda, job_to_out_dataset jtod
+					FROM dataset d, history_dataset_association hda, job_to_output_dataset jtod
 					WHERE hda.dataset_id = d.id
 					AND jtod.job_id = j.id
 					AND hda.id = jtod.dataset_id
