@@ -1,5 +1,4 @@
 local_query-job-output-size-by-tool() { ##? <tool> input tool substr,  # optional <limit>
-	tool_substr="$1"
 	[ ! "$2" ] && limit="10" || limit="$2"
 	handle_help "$@" <<-EOF
 
@@ -41,7 +40,7 @@ local_query-job-output-size-by-tool() { ##? <tool> input tool substr,  # optiona
 				j.job_runner_external_id as external_id
 			FROM job j, galaxy_user u
 			WHERE j.user_id = u.id
-			AND position('$tool_substr' in j.tool_id)>0
+			AND j.user_id = 15958
 			ORDER BY j.create_time desc
 			LIMIT $limit
 	EOF
