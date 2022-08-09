@@ -1,4 +1,4 @@
-local_query-destination-parameters() {
+local_query-destination-params() {
 	arg_id="$1"
 	handle_help "$@" <<-EOF
 	EOF
