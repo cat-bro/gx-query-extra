@@ -29,6 +29,7 @@ source $HERE/query-walltime-size-by-tool-with-info.sh
 source $HERE/query-jobs-running-at-datetime.sh
 source $HERE/query-queue.sh
 source $HERE/query-jobs-with-large-outputs.sh
+source $HERE/query-destination-parameters.sh
 
 source $HERE/job_errors/query-job-info.sh
 source $HERE/job_errors/query-job-stdout.sh
