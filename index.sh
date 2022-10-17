@@ -30,6 +30,7 @@ source $HERE/query-jobs-running-at-datetime.sh
 source $HERE/query-queue.sh
 source $HERE/query-jobs-with-large-outputs.sh
 source $HERE/query-destination-params.sh
+source $HERE/query-test-for-gxadmin.sh
 
 source $HERE/job_errors/query-job-info.sh
 source $HERE/job_errors/query-job-stdout.sh
