@@ -8,6 +8,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 
 	tool_id_substr=''
 	limit=50
+	states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
 
 	if (( $# > 0 )); then
 		for args in "$@"; do
