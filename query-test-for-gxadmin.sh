@@ -6,7 +6,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 	EOF
 
 	tool_id_substr=''
-	limit=100
+	limit=50
 	states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
 
 	if (( $# > 0 )); then
@@ -37,15 +37,14 @@ local_query-jobs() {  ## [--tool] [--limit]
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				j.id as job_id,
-				j.create_time as created,
-				j.update_time - j.create_time as duration,
-				u.username,
+				j.create_time::timestamp(0) as create_time,
+				j.update_time::timestamp(0) as update_time,
+				j.user_id as user_id,
 				j.state as state,
 				j.tool_id as tool_id,
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
-			FROM job j, galaxy_user u
-			WHERE j.user_id = u.id
+			FROM job j
 			AND position('$destination_id_substr' in j.destination_id)>0
 			AND position('$tool_id_substr' in j.tool_id)>0
 			AND state in ($states)
