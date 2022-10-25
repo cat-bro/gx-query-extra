@@ -2,6 +2,7 @@ local_query-jobs() {  ## [--tool]
 	# tool_substr="$1"
 	# [ ! "$2" ] && limit="50" || limit="$2"
 	limit=50
+	echo $args
 	handle_help "$@" <<-EOF
 	EOF
 
