@@ -1,13 +1,12 @@
 local_query-jobs() {  ## [--tool] [--limit]
 	# tool_substr="$1"
 	# [ ! "$2" ] && limit="50" || limit="$2"
-	limit=50
 	echo $args
 	handle_help "$@" <<-EOF
 	EOF
 
 	tool_id_substr=''
-	limit=50
+	limit=100
 	states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
 
 	if (( $# > 0 )); then
@@ -20,8 +19,14 @@ local_query-jobs() {  ## [--tool] [--limit]
 				destination_id_substr="${args:7}"
 			elif [ "${args:0:14}" = '--destination=' ]; then
 				destination_id_substr="${args:14}"
+			elif [ "${args:0:10}" = '--terminal' ]; then
+				states="ok,deleted,error"
+			elif [ "${args:0:13}" = '--nonterminal' ]; then
+				states="new,queued,running"
 			elif [ "${args:0:9}" = '--states=' ]; then
 				states="${args:9}"
+			elif [ "${args:0:9}" = '--user=' ]; then
+				user="${args:7}"
 			fi
 		done
 	fi
@@ -44,7 +49,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 			AND position('$destination_id_substr' in j.destination_id)>0
 			AND position('$tool_id_substr' in j.tool_id)>0
 			AND state in ($states)
-			ORDER BY j.create_time desc
+			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
 }
