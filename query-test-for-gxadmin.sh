@@ -43,7 +43,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 			WHERE j.user_id = u.id
 			AND position('$destination_id_substr' in j.destination_id)>0
 			AND position('$tool_id_substr' in j.tool_id)>0
-			AND state in $states
+			AND state in ($states)
 			ORDER BY j.create_time desc
 			LIMIT $limit
 	EOF
