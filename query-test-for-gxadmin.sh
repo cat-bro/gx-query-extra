@@ -13,7 +13,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 		for args in "$@"; do
 			if [ "${args:0:7}" = '--tool=' ]; then
 				tool_id_substr="${args:7}"
-			if [ "${args:0:8}" = '--limit=' ]; then
+			elif [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
 			fi
 		done
