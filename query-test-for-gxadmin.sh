@@ -15,12 +15,6 @@ local_query-jobs() {  ## [--tool] [--limit]
 				tool_id_substr="${args:7}"
 			if [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
-			# elif [ "${args:0:9}" = '--states=' ]; then
-			# 	states="${args:9}"
-			# elif [ "${args:0:13}" = '--older-than=' ]; then
-			# 	interval="${args:13}"
-			# elif [ "${args:0:2}" != '==' ]; then
-			# 	user_filter=$(get_user_filter "$1")
 			fi
 		done
 	fi
@@ -37,7 +31,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.job_runner_external_id as external_id
 			FROM job j, galaxy_user u
 			WHERE j.user_id = u.id
-			AND position('$args.tool' in j.tool_id)>0
+			AND position('$tool_id_substr' in j.tool_id)>0
 			ORDER BY j.create_time desc
 			LIMIT $limit
 	EOF
