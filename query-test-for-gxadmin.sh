@@ -16,9 +16,9 @@ local_query-jobs() {  ## [--tool] [--limit]
 			elif [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
 			elif [ "${args:0:7}" = '--dest=' ]; then
-				destination_substr="${args:7}"
+				destination_id_substr="${args:7}"
 			elif [ "${args:0:14}" = '--destination=' ]; then
-				destination_substr="${args:14}"
+				destination_id_substr="${args:14}"
 			elif [ "${args:0:9}" = '--states=' ]; then
 				states="${args:9}"
 			fi
@@ -40,7 +40,9 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.job_runner_external_id as external_id
 			FROM job j, galaxy_user u
 			WHERE j.user_id = u.id
+			AND position('$destination_id_substr' in j.destination_id)>0
 			AND position('$tool_id_substr' in j.tool_id)>0
+			AND state in $states
 			ORDER BY j.create_time desc
 			LIMIT $limit
 	EOF
