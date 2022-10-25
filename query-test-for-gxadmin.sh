@@ -1,10 +1,29 @@
-local_query-jobs() {  ## [--tool]
+local_query-jobs() {  ## [--tool] [--limit]
 	# tool_substr="$1"
 	# [ ! "$2" ] && limit="50" || limit="$2"
 	limit=50
 	echo $args
 	handle_help "$@" <<-EOF
 	EOF
+
+	tool_id_substr=''
+	limit=50
+
+	if (( $# > 0 )); then
+		for args in "$@"; do
+			if [ "${args:0:7}" = '--tool=' ]; then
+				tool_id_substr="${args:7}"
+			if [ "${args:0:8}" = '--limit=' ]; then
+				limit="${args:8}"
+			# elif [ "${args:0:9}" = '--states=' ]; then
+			# 	states="${args:9}"
+			# elif [ "${args:0:13}" = '--older-than=' ]; then
+			# 	interval="${args:13}"
+			# elif [ "${args:0:2}" != '==' ]; then
+			# 	user_filter=$(get_user_filter "$1")
+			fi
+		done
+	fi
 
 	read -r -d '' QUERY <<-EOF
 			SELECT
