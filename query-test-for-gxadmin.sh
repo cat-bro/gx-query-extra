@@ -15,9 +15,18 @@ local_query-jobs() {  ## [--tool] [--limit]
 				tool_id_substr="${args:7}"
 			elif [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
+			elif [ "${args:0:7}" = '--dest=' ]; then
+				destination_substr="${args:7}"
+			elif [ "${args:0:14}" = '--destination=' ]; then
+				destination_substr="${args:14}"
+			elif [ "${args:0:9}" = '--states=' ]; then
+				states="${args:9}"
 			fi
 		done
 	fi
+
+	states="'$(echo "$states" | sed "s/,/', '/g")'"
+
 
 	read -r -d '' QUERY <<-EOF
 			SELECT
