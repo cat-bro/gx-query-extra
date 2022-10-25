@@ -45,7 +45,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
 			FROM job j
-			AND position('$destination_id_substr' in j.destination_id)>0
+			WHERE position('$destination_id_substr' in j.destination_id)>0
 			AND position('$tool_id_substr' in j.tool_id)>0
 			AND state in ($states)
 			ORDER BY j.update_time desc
