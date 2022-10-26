@@ -37,6 +37,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 			echo "AND state IN (${states})"
 		fi
 	}
+	echo $(state_filter)
 
 	destination_filter() {
 		if [ ! -z "$destination_id_substr" ]; then
