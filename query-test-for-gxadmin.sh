@@ -51,7 +51,7 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 			FROM job j
 			WHERE position('$destination_id_substr' in j.destination_id)>0
 			AND position('$tool_id_substr' in j.tool_id)>0
-			AND state in ($states)
+			AND j.state in ($states)
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
