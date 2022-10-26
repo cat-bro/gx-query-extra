@@ -34,7 +34,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 	states="'$(echo "$states" | sed "s/,/', '/g")'"
 	state_filter() {
 		if [ "$states" ]; then
-			echo "AND state IN (${states})"
+			echo "AND j.state IN (${states})"
 		fi
 	}
 	echo $(state_filter)
