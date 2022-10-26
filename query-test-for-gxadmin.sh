@@ -3,6 +3,7 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 	EOF
 
 	tool_id_substr=''
+	destination_id_substr=''
 	limit=50
 	# states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
 
@@ -12,10 +13,10 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 				tool_id_substr="${args:7}"
 			elif [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
-			elif [ "${args:0:7}" = '--dest=' ]; then
-				destination_id_substr="${args:7}"
-			elif [ "${args:0:14}" = '--destination=' ]; then
-				destination_id_substr="${args:14}"
+			# elif [ "${args:0:7}" = '--dest=' ]; then
+			# 	destination_id_substr="${args:7}"
+			# elif [ "${args:0:14}" = '--destination=' ]; then
+			# 	destination_id_substr="${args:14}"
 			elif [ "${args:0:10}" = '--terminal' ]; then
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
@@ -30,11 +31,11 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 
 	states="'$(echo "$states" | sed "s/,/', '/g")'"
 
-	destination_filter() {
-		if [ "destination_id_substr" ]; then
-			echo 'AND position("$destination_id_substr" in j.destination_id)>0';
-		fi
-	}
+	# destination_filter() {
+	# 	if [ "destination_id_substr" ]; then
+	# 		echo 'AND position("$destination_id_substr" in j.destination_id)>0';
+	# 	fi
+	# }
 	# state_filter() {
 	# 	if [ "$states "]; then
 	# 		states="'$(echo "$states" | sed "s/,/', '/g")'"
@@ -55,7 +56,6 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 				j.job_runner_external_id as external_id
 			FROM job j
 			WHERE position('$tool_id_substr' in j.tool_id)>0
-			$destination_filter
 			AND j.state in ($states)
 			ORDER BY j.update_time desc
 			LIMIT $limit
