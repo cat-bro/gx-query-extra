@@ -32,13 +32,11 @@ local_query-jobs() {  ## [--tool] [--limit]
 	fi
 
 	states="'$(echo "$states" | sed "s/,/', '/g")'"
-
 	state_filter() {
 		if [ "$states" ]; then
-			echo 'AND state IN ($states)'
+			echo "AND state IN (${states})"
 		fi
 	}
-	echo $state_filter
 
 	destination_filter() {
 		if [ "destination_id_substr" ]; then
@@ -54,12 +52,13 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.user_id as user_id,
 				j.state as state,
 				j.tool_id as tool_id,
+				j.handler as handler,
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
 			FROM job j
 			WHERE position('$tool_id_substr' in j.tool_id)>0
 			$destination_filter
-			AND state in ($states)
+			$state_filter
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
@@ -128,5 +127,32 @@ local_query-job-info() { ## <-|job_id [job_id [...]]> : Retrieve information abo
 			FULL OUTER JOIN hostname_query ON hostname_query.job_id = job.id
 			FULL OUTER JOIN metric_num_query ON metric_num_query.job_id = job.id
 		WHERE job.id IN ($job_ids_string)
+	EOF
+}
+
+get_user_filter(){
+	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST('$1' AS INTEGER))"
+}
+
+query_jobs-per-user() { ##? <user>: Number of jobs run by a specific user
+	handle_help "$@" <<-EOF
+		    $ gxadmin query jobs-per-user helena
+		     count | user_id
+		    -------+---------
+		       999 |       1
+		    (1 row)
+	EOF
+
+	user_filter=$(get_user_filter "$arg_user")
+
+	read -r -d '' QUERY <<-EOF
+			SELECT count(*), user_id
+			FROM job
+			WHERE user_id in (
+				SELECT id
+				FROM galaxy_user
+				WHERE $user_filter
+			)
+			GROUP BY user_id
 	EOF
 }
