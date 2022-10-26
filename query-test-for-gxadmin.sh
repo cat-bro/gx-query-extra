@@ -39,7 +39,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 	}
 
 	destination_filter() {
-		if [ "destination_id_substr" ]; then
+		if [ "destination_id_substr" != "" ]; then
 			echo "AND position('${destination_id_substr}' in j.destination_id)>0";
 		fi
 	}
