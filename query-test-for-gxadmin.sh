@@ -20,8 +20,8 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
 				states="new,queued,running"
-			elif [ "${args:0:9}" = '--state=' ]; then
-				states="${args:9}"
+			elif [ "${args:0:8}" = '--state=' ]; then
+				states="${args:8}"
 			elif [ "${args:0:9}" = '--user=' ]; then
 				user="${args:7}"
 			fi
