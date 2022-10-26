@@ -1,11 +1,13 @@
-local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--nonterminal] [--limit]
+local_query-jobs() {  ## [--tool] [--limit]
+	# tool_substr="$1"
+	# [ ! "$2" ] && limit="50" || limit="$2"
+	echo $args
 	handle_help "$@" <<-EOF
 	EOF
 
 	tool_id_substr=''
-	destination_id_substr=''
 	limit=50
-	# states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
+	states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
 
 	if (( $# > 0 )); then
 		for args in "$@"; do
@@ -13,16 +15,16 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 				tool_id_substr="${args:7}"
 			elif [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
-			# elif [ "${args:0:7}" = '--dest=' ]; then
-			# 	destination_id_substr="${args:7}"
-			# elif [ "${args:0:14}" = '--destination=' ]; then
-			# 	destination_id_substr="${args:14}"
+			elif [ "${args:0:7}" = '--dest=' ]; then
+				destination_id_substr="${args:7}"
+			elif [ "${args:0:14}" = '--destination=' ]; then
+				destination_id_substr="${args:14}"
 			elif [ "${args:0:10}" = '--terminal' ]; then
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
 				states="new,queued,running"
-			elif [ "${args:0:8}" = '--state=' ]; then
-				states="${args:8}"
+			elif [ "${args:0:9}" = '--states=' ]; then
+				states="${args:9}"
 			elif [ "${args:0:9}" = '--user=' ]; then
 				user="${args:7}"
 			fi
@@ -30,18 +32,6 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 	fi
 
 	states="'$(echo "$states" | sed "s/,/', '/g")'"
-
-	# destination_filter() {
-	# 	if [ "destination_id_substr" ]; then
-	# 		echo 'AND position("$destination_id_substr" in j.destination_id)>0';
-	# 	fi
-	# }
-	# state_filter() {
-	# 	if [ "$states "]; then
-	# 		states="'$(echo "$states" | sed "s/,/', '/g")'"
-	# 		echo 'AND states in $states'
-	# 	fi
-	# }
 
 
 	read -r -d '' QUERY <<-EOF
@@ -55,8 +45,9 @@ local_query-jobs() {  ## [--tool] [--dest|--destination] [--states|--terminal|--
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
 			FROM job j
-			WHERE position('$tool_id_substr' in j.tool_id)>0
-			AND j.state in ($states)
+			WHERE position('$destination_id_substr' in j.destination_id)>0
+			AND position('$tool_id_substr' in j.tool_id)>0
+			AND state in ($states)
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
