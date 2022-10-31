@@ -48,30 +48,32 @@ local_query-jobs() {  ## [--tool] [--limit]
 	get_state_filter() {
 		if [ "$states" ]; then
 			states="'$(echo "$states" | sed "s/,/', '/g")'"
-			echo "AND j.state IN (${states})"
+			echo "AND state IN (${states})"
 		fi
 	}
 
 	get_destination_filter() {
 		if [ ! -z "$destination_id_substr" ]; then
-			echo "AND j.destination_id ~ '${destination_id_substr}'";
+			echo "AND destination_id ~ '${destination_id_substr}'";
 		fi
 	}
 
 	read -r -d '' QUERY <<-EOF
 			SELECT
-				j.id as job_id,
-				j.create_time::timestamp(0) as create_time,
-				j.update_time::timestamp(0) as update_time,
-				j.user_id as user_id,
-				j.state as state,
-				j.tool_id as tool_id,
-				j.handler as handler,
-				j.destination_id as destination,
-				j.job_runner_external_id as external_id
-			FROM job j
-			WHERE j.tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $user_filter
-			ORDER BY j.update_time desc
+				id as id,
+				create_time::timestamp(0) as create_time,
+				update_time::timestamp(0) as update_time,
+				user_id as user_id,
+				state as state,
+				tool_id as tool_id,
+				handler as handler,
+				destination_id as destination,
+				job_runner_external_id as external_id
+			FROM job
+			LEFT OUTER JOIN
+				galaxy_user ON user_id = galaxy_user.id
+			WHERE tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $user_filter
+			ORDER BY update_time desc
 			LIMIT $limit
 	EOF
 }
