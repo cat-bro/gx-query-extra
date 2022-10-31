@@ -6,23 +6,29 @@ local_query-jobs() {  ## [--tool] [--limit]
 
 	tool_id_substr=''
 	limit=50
-
+			
 	if (( $# > 0 )); then
 		for args in "$@"; do
 			if [ "${args:0:7}" = '--tool=' ]; then
 				tool_id_substr="${args:7}"
+			if [ "${args:0:3}" = '-t=' ]; then
+				tool_id_substr="${args:3}"
 			elif [ "${args:0:8}" = '--limit=' ]; then
 				limit="${args:8}"
-			elif [ "${args:0:7}" = '--dest=' ]; then
-				destination_id_substr="${args:7}"
+			elif [ "${args:0:3}" = '-l=' ]; then
+				limit="${args:3}"
 			elif [ "${args:0:14}" = '--destination=' ]; then
 				destination_id_substr="${args:14}"
+			elif [ "${args:0:3}" = '-d=' ]; then
+				destination_id_substr="${args:3}"
+			elif [ "${args:0:9}" = '--states=' ]; then
+				states="${args:9}"
+			elif [ "${args:0:3}" = '-s=' ]; then
+				states="${args:3}"
 			elif [ "${args:0:10}" = '--terminal' ]; then
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
 				states="new,queued,running"
-			elif [ "${args:0:9}" = '--states=' ]; then
-				states="${args:9}"
 			elif [ "${args:0:9}" = '--user=' ]; then
 				user="${args:7}"
 			fi
@@ -35,14 +41,12 @@ local_query-jobs() {  ## [--tool] [--limit]
 			echo "AND j.state IN (${states})"
 		fi
 	}
-	echo $(state_filter)
 
 	destination_filter() {
 		if [ ! -z "$destination_id_substr" ]; then
 			echo "AND position('${destination_id_substr}' in j.destination_id)>0";
 		fi
 	}
-	echo $(destination_filter)
 
 	read -r -d '' QUERY <<-EOF
 			SELECT
@@ -132,7 +136,7 @@ get_user_filter(){
 	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST('$1' AS INTEGER))"
 }
 
-query_jobs-per-user() { ##? <user>: Number of jobs run by a specific user
+local_query-jobs-per-user() { ##? <user>: Number of jobs run by a specific user
 	handle_help "$@" <<-EOF
 		    $ gxadmin query jobs-per-user helena
 		     count | user_id
