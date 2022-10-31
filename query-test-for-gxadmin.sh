@@ -137,6 +137,7 @@ get_user_filter(){
 }
 
 local_query-jobs-per-user() { ##? <user>: Number of jobs run by a specific user
+	arg_user="$1"
 	handle_help "$@" <<-EOF
 		    $ gxadmin query jobs-per-user helena
 		     count | user_id
