@@ -133,8 +133,11 @@ local_query-job-info() { ## <-|job_id [job_id [...]]> : Retrieve information abo
 }
 
 get_user_filter(){
-	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST('$1' AS INTEGER))"
+	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1')"
 }
+# get_user_filter(){
+# 	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST('$1' AS INTEGER))"
+# }
 
 local_query-jobs-per-user() { ##? <user>: Number of jobs run by a specific user
 	arg_user="$1"
