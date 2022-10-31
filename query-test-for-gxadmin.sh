@@ -1,6 +1,10 @@
 local_query-jobs() {  ## [--tool] [--limit]
 	handle_help "$@" <<-EOF
 
+	Displays a list of jobs ordered from most recently updated, which can be
+	filtered by state, destination_id, tool_id or user
+
+	
 	
 	EOF
 
@@ -25,12 +29,14 @@ local_query-jobs() {  ## [--tool] [--limit]
 				states="${args:9}"
 			elif [ "${args:0:3}" = '-s=' ]; then
 				states="${args:3}"
+			elif [ "${args:0:7}" = '--user=' ]; then
+				user="${args:7}"
+			elif [ "${args:0:3}" = '-u=' ]; then
+				user="${args:3}"
 			elif [ "${args:0:10}" = '--terminal' ]; then
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
 				states="new,queued,running"
-			elif [ "${args:0:9}" = '--user=' ]; then
-				user="${args:7}"
 			fi
 		done
 	fi
@@ -44,7 +50,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 
 	destination_filter() {
 		if [ ! -z "$destination_id_substr" ]; then
-			echo "AND position('${destination_id_substr}' in j.destination_id)>0";
+			echo "AND j.destination_id ~ '${destination_id_substr}'";
 		fi
 	}
 
@@ -60,7 +66,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
 			FROM job j
-			WHERE position('$tool_id_substr' in j.tool_id)>0 $(destination_filter) $(state_filter)
+			WHERE j.tool_id ~ '$tool_id_substr' $(destination_filter) $(state_filter)
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
