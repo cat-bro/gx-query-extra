@@ -1,3 +1,7 @@
+get_user_filter(){
+	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST(REGEXP_REPLACE('$1', '.*\D+.*', '-1') AS INTEGER))"
+}
+
 local_query-jobs() {  ## [--tool] [--limit]
 	handle_help "$@" <<-EOF
 
@@ -66,7 +70,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
 			FROM job j
-			WHERE j.tool_id ~ '$tool_id_substr' $(destination_filter) $(state_filter)
+			WHERE j.tool_id ~ '$tool_id_substr' $(destination_filter) $(state_filter) $(user_filter)
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
@@ -144,9 +148,7 @@ local_query-job-info() { ## <-|job_id [job_id [...]]> : Retrieve information abo
 # get_user_filter(){
 # 	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or SELECT CASE WHEN '$1'~E'^\\d+$' THEN galaxy_user.id = CAST(<column> AS INTEGER) END"
 # }
-get_user_filter(){
-	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST(REGEXP_REPLACE('$1', '.*\D+.*', '-1') AS INTEGER))"
-}
+
 
 local_query-jobs-per-user() { ##? <user>: Number of jobs run by a specific user
 	arg_user="$1"
