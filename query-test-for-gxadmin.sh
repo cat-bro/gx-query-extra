@@ -1,13 +1,11 @@
 local_query-jobs() {  ## [--tool] [--limit]
-	# tool_substr="$1"
-	# [ ! "$2" ] && limit="50" || limit="$2"
-	echo $args
 	handle_help "$@" <<-EOF
+
+	
 	EOF
 
 	tool_id_substr=''
 	limit=50
-	# states='new,queued,running,ok,deleted,error'  # no good, we want this to be optional
 
 	if (( $# > 0 )); then
 		for args in "$@"; do
@@ -31,9 +29,9 @@ local_query-jobs() {  ## [--tool] [--limit]
 		done
 	fi
 
-	states="'$(echo "$states" | sed "s/,/', '/g")'"
 	state_filter() {
 		if [ "$states" ]; then
+			states="'$(echo "$states" | sed "s/,/', '/g")'"
 			echo "AND j.state IN (${states})"
 		fi
 	}
@@ -45,7 +43,6 @@ local_query-jobs() {  ## [--tool] [--limit]
 		fi
 	}
 	echo $(destination_filter)
-
 
 	read -r -d '' QUERY <<-EOF
 			SELECT
