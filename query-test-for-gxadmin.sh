@@ -45,14 +45,14 @@ local_query-jobs() {  ## [--tool] [--limit]
 		done
 	fi
 
-	state_filter() {
+	get_state_filter() {
 		if [ "$states" ]; then
 			states="'$(echo "$states" | sed "s/,/', '/g")'"
 			echo "AND j.state IN (${states})"
 		fi
 	}
 
-	destination_filter() {
+	get_destination_filter() {
 		if [ ! -z "$destination_id_substr" ]; then
 			echo "AND j.destination_id ~ '${destination_id_substr}'";
 		fi
@@ -70,7 +70,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 				j.destination_id as destination,
 				j.job_runner_external_id as external_id
 			FROM job j
-			WHERE j.tool_id ~ '$tool_id_substr' $(destination_filter) $(state_filter) $(user_filter)
+			WHERE j.tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $user_filter
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
