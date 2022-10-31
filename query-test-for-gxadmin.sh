@@ -72,7 +72,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 			FROM job
 			LEFT OUTER JOIN
 				galaxy_user ON job.user_id = galaxy_user.id
-			WHERE job.tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $get_user_filter
+			WHERE job.tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $(get_user_filter $user)
 			ORDER BY job.update_time desc
 			LIMIT $limit
 	EOF
