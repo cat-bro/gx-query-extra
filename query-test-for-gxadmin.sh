@@ -4,7 +4,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 	Displays a list of jobs ordered from most recently updated, which can be
 	filtered by state, destination_id, tool_id or user
 
-	
+
 	
 	EOF
 
@@ -30,9 +30,9 @@ local_query-jobs() {  ## [--tool] [--limit]
 			elif [ "${args:0:3}" = '-s=' ]; then
 				states="${args:3}"
 			elif [ "${args:0:7}" = '--user=' ]; then
-				user="${args:7}"
+				user_filter=$(get_user_filter "${args:7}")
 			elif [ "${args:0:3}" = '-u=' ]; then
-				user="${args:3}"
+				user_filter=$(get_user_filter "${args:3}")
 			elif [ "${args:0:10}" = '--terminal' ]; then
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
