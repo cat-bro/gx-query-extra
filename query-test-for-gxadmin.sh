@@ -34,9 +34,9 @@ local_query-jobs() {  ## [--tool] [--limit]
 			elif [ "${args:0:3}" = '-s=' ]; then
 				states="${args:3}"
 			elif [ "${args:0:7}" = '--user=' ]; then
-				user_filter=$(get_user_filter "${args:7}")
+				user="${args:7}"
 			elif [ "${args:0:3}" = '-u=' ]; then
-				user_filter=$(get_user_filter "${args:3}")
+				user="${args:3}"
 			elif [ "${args:0:10}" = '--terminal' ]; then
 				states="ok,deleted,error"
 			elif [ "${args:0:13}" = '--nonterminal' ]; then
@@ -72,7 +72,7 @@ local_query-jobs() {  ## [--tool] [--limit]
 			FROM job
 			LEFT OUTER JOIN
 				galaxy_user ON user_id = galaxy_user.id
-			WHERE tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $user_filter
+			WHERE tool_id ~ '$tool_id_substr' $(get_destination_filter) $(get_state_filter) $(get_user_filter)
 			ORDER BY update_time desc
 			LIMIT $limit
 	EOF
