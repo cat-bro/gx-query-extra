@@ -29,6 +29,8 @@ local_query-jobs()  { ##? <tool> <destination> <limit> <states> <user> <terminal
 	tool_id_substr=''
 	limit=50
 
+	printenv
+
 	[[ -n $arg_tool ]] && tool_id_substr=$arg_tool
 	[[ -n $arg_destination ]] && destination_id_substr=$arg_destination
 	[[ -n $arg_limit ]] && limit=$arg_limit
