@@ -2,10 +2,10 @@ get_user_filter(){
 	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST(REGEXP_REPLACE('$1', '.*\D+.*', '-1') AS INTEGER))"
 }
 
-local_query-jobs() { ##? [--tool|-t] [--destination|d] [--limit|-l] [--states|-s] [--user|-u] [--terminal] [--nonterminal]: List jobs ordered by most recently updated
+local_query-jobs()  { ##? [--tool|-t] [--destination|d] [--limit|-l] [--states|-s] [--user|-u] [--terminal] [--nonterminal]: List jobs ordered by most recently updated
 	handle_help "$@" <<-EOF
-		Displays a list of jobs ordered from most recently updated, which can be
-		filtered by states, destination_id, tool_id or user. For example:
+		Displays a list of jobs ordered from most recently updated, which can be filtered by states, destination_id,
+		tool_id or user. By default up to 50 rows are returned which can be adjusted with the --limit or -l flag.
 
 		$ gxadmin query jobs --destination=pulsar-nci-test
 		  id   |     create_time     |     update_time     | user_id |  state  |                                           tool_id                                           |  handler  |         destination         | external_id
@@ -27,36 +27,45 @@ local_query-jobs() { ##? [--tool|-t] [--destination|d] [--limit|-l] [--states|-s
 
 	tool_id_substr=''
 	limit=50
-			
-	if (( $# > 0 )); then
-		for args in "$@"; do
-			if [ "${args:0:7}" = '--tool=' ]; then
-				tool_id_substr="${args:7}"
-			elif [ "${args:0:3}" = '-t=' ]; then
-				tool_id_substr="${args:3}"
-			elif [ "${args:0:8}" = '--limit=' ]; then
-				limit="${args:8}"
-			elif [ "${args:0:3}" = '-l=' ]; then
-				limit="${args:3}"
-			elif [ "${args:0:14}" = '--destination=' ]; then
-				destination_id_substr="${args:14}"
-			elif [ "${args:0:3}" = '-d=' ]; then
-				destination_id_substr="${args:3}"
-			elif [ "${args:0:9}" = '--states=' ]; then
-				states="${args:9}"
-			elif [ "${args:0:3}" = '-s=' ]; then
-				states="${args:3}"
-			elif [ "${args:0:7}" = '--user=' ]; then
-				user_filter=" AND $(get_user_filter ${args:7})"
-			elif [ "${args:0:3}" = '-u=' ]; then
-				user_filter=" AND $(get_user_filter ${args:3})"
-			elif [ "${args:0:10}" = '--terminal' ]; then
-				states="ok,deleted,error"
-			elif [ "${args:0:13}" = '--nonterminal' ]; then
-				states="new,queued,running"
-			fi
-		done
-	fi
+
+	[[ -n $arg_tool ]] && tool_id_substr=$arg_tool
+	[[ -n $arg_destination ]] && destination_id_substr=$arg_destination
+	[[ -n $arg_limit ]] && limit=$arg_limit
+	[[ -n $arg_states ]] && states=$arg_states
+	[[ -n $arg_terminal ]] && states="ok,deleted,error"
+	[[ -n $arg_nonterminal ]] && states="new,queued,running"
+	[[ -n $arg_nonterminal ]] && user_filter=" AND $(get_user_filter $arg_user)"
+
+
+	# if (( $# > 0 )); then
+	# 	for args in "$@"; do
+	# 		if [ "${args:0:7}" = '--tool=' ]; then
+	# 			tool_id_substr="${args:7}"
+	# 		elif [ "${args:0:3}" = '-t=' ]; then
+	# 			tool_id_substr="${args:3}"
+	# 		elif [ "${args:0:8}" = '--limit=' ]; then
+	# 			limit="${args:8}"
+	# 		elif [ "${args:0:3}" = '-l=' ]; then
+	# 			limit="${args:3}"
+	# 		elif [ "${args:0:14}" = '--destination=' ]; then
+	# 			destination_id_substr="${args:14}"
+	# 		elif [ "${args:0:3}" = '-d=' ]; then
+	# 			destination_id_substr="${args:3}"
+	# 		elif [ "${args:0:9}" = '--states=' ]; then
+	# 			states="${args:9}"
+	# 		elif [ "${args:0:3}" = '-s=' ]; then
+	# 			states="${args:3}"
+	# 		elif [ "${args:0:7}" = '--user=' ]; then
+	# 			user_filter=" AND $(get_user_filter ${args:7})"
+	# 		elif [ "${args:0:3}" = '-u=' ]; then
+	# 			user_filter=" AND $(get_user_filter ${args:3})"
+	# 		elif [ "${args:0:10}" = '--terminal' ]; then
+	# 			states="ok,deleted,error"
+	# 		elif [ "${args:0:13}" = '--nonterminal' ]; then
+	# 			states="new,queued,running"
+	# 		fi
+	# 	done
+	# fi
 
 	get_state_filter() {
 		if [ "$states" ]; then
