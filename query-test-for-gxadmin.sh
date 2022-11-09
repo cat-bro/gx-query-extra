@@ -2,7 +2,7 @@ get_user_filter(){
 	echo "(galaxy_user.email = '$1' or galaxy_user.username = '$1' or galaxy_user.id = CAST(REGEXP_REPLACE('$1', '.*\D+.*', '-1') AS INTEGER))"
 }
 
-local_query-jobs()  { ##? [--tool] [--destination] [--limit] [--states] [--user] [--terminal] [--nonterminal]: List jobs ordered by most recently updated
+local_query-jobs()  { ##? <tool> <destination> <limit> <states> <user> <terminal> <nonterminal>: List jobs ordered by most recently updated
 # local_query-jobs()  { ##? [--tool|-t] [--destination|d] [--limit|-l] [--states|-s] [--user|-u] [--terminal] [--nonterminal]: List jobs ordered by most recently updated
 	handle_help "$@" <<-EOF
 		Displays a list of jobs ordered from most recently updated, which can be filtered by states, destination_id,
