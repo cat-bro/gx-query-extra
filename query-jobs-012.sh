@@ -13,7 +13,7 @@ local_query-jobs-012() { ## input limit,  # optional string of more clauses
 				state as state,
 				tool_id as tool_id,
 				destination_id as destination
-			FROM job j, galaxy_user u
+			FROM job
 				JOIN job_to_input_dataset jtid
 					ON j.id = jtid.job_id
 				JOIN history_dataset_association hda
