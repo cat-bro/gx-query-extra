@@ -7,13 +7,13 @@ local_query-jobs-012() { ## input limit,  # optional string of more clauses
 
 	read -r -d '' QUERY <<-EOF
 			SELECT
-				id as job_id,
-				create_time as created,
-				user_id,
-				state as state,
-				tool_id as tool_id,
-				destination_id as destination
-			FROM job
+				j.id as job_id,
+				j.create_time as created,
+				j.user_id,
+				j.state as state,
+				j.tool_id as tool_id,
+				j.destination_id as destination
+			FROM job j
 				JOIN job_to_input_dataset jtid
 					ON j.id = jtid.job_id
 				JOIN history_dataset_association hda
