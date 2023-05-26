@@ -21,9 +21,9 @@ local_query-jobs-userdata1() { ## input limit,  # optional string of more clause
 				JOIN dataset d
 					ON hda.dataset_id = d.id
 			WHERE
-				d.create_time < '2021-01-01 01:00:00'
+				d.create_time > '2021-01-01 01:00:00'
 			AND
-				d.create_time > '2021-07-31 23:00:00'
+				d.create_time < '2021-07-31 23:00:00'
 			ORDER BY j.create_time desc
 			LIMIT $limit
 	EOF
