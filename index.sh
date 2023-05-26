@@ -41,3 +41,4 @@ source $HERE/job_errors/query-tool-stderr.sh
 source $HERE/grt/query-grt1.sh
 
 source $HERE/query-jobs-012.sh
+source $HERE/query-jobs-userdata1.sh
