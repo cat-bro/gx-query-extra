@@ -19,8 +19,8 @@ local_query-oom-jobs() { ##? <limit> : Show most recent jobs with Killed in tool
 				u.username,
 				j.update_time as updated,
 				j.tool_id as tool_id,
-				(REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
-				(REGEXP_MATCHES(encode(job.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
+				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
+				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem,
 				(
 					SELECT
 					pg_size_pretty(SUM(d.total_size))
