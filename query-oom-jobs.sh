@@ -6,11 +6,11 @@ local_query-oom-jobs() { ##? <limit> : Show most recent jobs with Killed in tool
 	Optional argument of number of rows to return (default: 50).
 
 	$ gxadmin local query-oom-jobs 3
-	   id    | user_id |        create_time         |                             tool_id                             | cores | mem_mb | sum_input_size |    destination_id
-	---------+---------+----------------------------+-----------------------------------------------------------------+-------+--------+----------------+----------------------
-	 6994190 |    1234 | 2023-08-30 22:26:38.904458 | toolshed.g2.bx.psu.edu/repos/iuc/minimap2/minimap2/2.20+galaxy2 | 16    | 62874  | 8947 MB        | pulsar-QLD
-	 6993519 |   15678 | 2023-08-30 16:16:13.27616  | toolshed.g2.bx.psu.edu/repos/chemteam/bio3d_pca/bio3d_pca/2.3.4 | 1     | 65536  | 5667 MB        | pulsar-qld-high-mem1
-	 6993500 |         | 2023-08-30 16:01:10.09834  | toolshed.g2.bx.psu.edu/repos/iuc/abyss/abyss-pe/2.3.6+galaxy0   | 16    | 62874  | 22 MB          | pulsar-mel3
+	   id    | username |        create_time         |                             tool_id                             | cores | mem_mb | sum_input_size |    destination_id
+	---------+----------+----------------------------+-----------------------------------------------------------------+-------+--------+----------------+----------------------
+	 6994190 | anthony  | 2023-08-30 22:26:38.904458 | toolshed.g2.bx.psu.edu/repos/iuc/minimap2/minimap2/2.20+galaxy2 | 16    | 62874  | 8947 MB        | pulsar-QLD
+	 6993519 | bob      | 2023-08-30 16:16:13.27616  | toolshed.g2.bx.psu.edu/repos/chemteam/bio3d_pca/bio3d_pca/2.3.4 | 1     | 65536  | 5667 MB        | pulsar-qld-high-mem1
+	 6993500 | julia    | 2023-08-30 16:01:10.09834  | toolshed.g2.bx.psu.edu/repos/iuc/abyss/abyss-pe/2.3.6+galaxy0   | 16    | 62874  | 22 MB          | pulsar-mel3
 	EOF
 
 	read -r -d '' QUERY <<-EOF
