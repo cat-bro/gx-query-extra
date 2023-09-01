@@ -34,6 +34,7 @@ local_query-tool-memory() { ##? <limit>
 				) as runtime,
 				j.destination_id as destination
 			FROM job j
+			WHERE position('$tool_substr' in j.tool_id)>0
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
