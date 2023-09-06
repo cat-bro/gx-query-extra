@@ -1,7 +1,21 @@
 local_query-tool-memory() { ##? <limit>
 	tool_substr="$1"
-	[ ! "$2" ] && limit="10" || limit="$2"
+	[ ! "$2" ] && limit="50" || limit="$2"
 	handle_help "$@" <<-EOF
+
+	For a substring of a tool ID, list the most recent jobs with annotated with
+	    tpv_cores, tpv_mem_mb (the cores and memory allocated to the job)
+		input_size (the sum of the input file sizes)
+		job_max_mem (from the cgroup job metric value memory.max_usage_in_bytes)
+		runtime (from the job metric runtime_seconds)
+	The is an optional second argument of number of rows to return (default 50)
+
+	$gxadmin local query-tool-memory flye 3
+	 job_id  |          updated           | state |                            tool_id                             | tpv_cores | tpv_mem_mb | input_size | job_max_mem | runtime  |     destination
+	---------+----------------------------+-------+----------------------------------------------------------------+-----------+------------+------------+-------------+----------+----------------------
+	 6999140 | 2023-09-05 10:19:45.517908 | ok    | toolshed.g2.bx.psu.edu/repos/bgruening/flye/flye/2.9.1+galaxy0 | 120       | 1968128    | 34 GB      | 728 GB      | 42:01:32 | pulsar-qld-high-mem1
+	 7020524 | 2023-09-05 08:32:40.891413 | ok    | toolshed.g2.bx.psu.edu/repos/bgruening/flye/flye/2.9.1+galaxy0 | 16        | 62874      | 420 MB     | 9186 MB     | 00:11:28 | pulsar-mel3
+	 7020514 | 2023-09-05 08:19:25.951317 | ok    | toolshed.g2.bx.psu.edu/repos/bgruening/flye/flye/2.9.1+galaxy0 | 8         | 31437      | 207 MB     | 8991 MB     | 00:03:40 | pulsar-mel3
 
 	EOF
 
@@ -22,7 +36,7 @@ local_query-tool-memory() { ##? <limit>
 						WHERE hda.dataset_id = d.id
 						AND jtid.job_id = j.id
 						AND hda.id = jtid.dataset_id
-					) as kris
+					) as foo
 				) as input_size,
 				(SELECT 
 					pg_size_pretty(jmn.metric_value)
