@@ -9,9 +9,10 @@ local_query-tool-memory() { ##? <limit>
 			SELECT
 				j.id as job_id,
 				j.update_time as updated,
+				j.state as state,
 				j.tool_id as tool_id,
-				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as cores,
-				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem_mb,
+				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as tpv_cores,
+				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as tpv_mem_mb,
 				(
 					SELECT
 					pg_size_pretty(SUM(total_size))
@@ -22,13 +23,13 @@ local_query-tool-memory() { ##? <limit>
 						AND jtid.job_id = j.id
 						AND hda.id = jtid.dataset_id
 					) as kris
-				) as sum_input_size,
+				) as input_size,
 				(SELECT 
 					pg_size_pretty(jmn.metric_value)
 					FROM job_metric_numeric jmn
 					WHERE jmn.metric_name = 'memory.max_usage_in_bytes'
 					AND jmn.job_id = j.id
-				) as max_mem,
+				) as job_max_mem,
 				(SELECT 
 					TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS')
 					FROM job_metric_numeric jmn
