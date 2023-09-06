@@ -14,11 +14,14 @@ local_query-tool-memory() { ##? <limit>
 				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as mem_mb,
 				(
 					SELECT
-					pg_size_pretty(SUM(d.total_size))
-					FROM dataset d, history_dataset_association hda, job_to_input_dataset jtid
-					WHERE hda.dataset_id = d.id
-					AND jtid.job_id = j.id
-					AND hda.id = jtid.dataset_id
+					pg_size_pretty(SUM(total_size))
+					FROM (
+						SELECT distinct hda.id as hda_id, d.total_size as total_size
+						FROM dataset d, history_dataset_association hda, job_to_input_dataset jtid
+						WHERE hda.dataset_id = d.id
+						AND jtid.job_id = j.id
+						AND hda.id = jtid.dataset_id
+					) as kris
 				) as sum_input_size,
 				(SELECT 
 					pg_size_pretty(jmn.metric_value)
