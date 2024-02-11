@@ -42,6 +42,7 @@ source $HERE/job_errors/query-traceback.sh
 source $HERE/grt/query-grt1.sh
 
 source $HERE/query-jobs-012.sh
+source $HERE/query-jobs-edit.sh
 source $HERE/query-jobs-userdata1.sh
 source $HERE/query-jobs-userdata4.sh
 source $HERE/query-oom-jobs.sh
