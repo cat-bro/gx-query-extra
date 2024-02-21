@@ -20,7 +20,7 @@ local_query-jobs-by-object-store-id() { ## [object_store_id]: Substring of objec
 				JOIN dataset d
 					ON hda.dataset_id = d.id
 			WHERE
-				d.object_store_id ~ $object_store_id
+				d.object_store_id ~ '$object_store_id'
 			ORDER BY j.create_time desc
 			LIMIT $limit
 	EOF
