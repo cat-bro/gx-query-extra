@@ -40,7 +40,7 @@ local_query-general-pulsar-recent() { ##?
 					AND jmn.job_id = j.id
 				) as job_max_mem,
 				(SELECT 
-					TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS')
+					jmn.metric_value
 					FROM job_metric_numeric jmn
 					WHERE jmn.metric_name = 'runtime_seconds'
 					AND jmn.job_id = j.id
