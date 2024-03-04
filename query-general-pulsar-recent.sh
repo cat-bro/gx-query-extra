@@ -13,7 +13,7 @@ local_query-general-pulsar-recent() { ##?
 				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as tpv_mem_mb,
 				(
 					SELECT
-					pg_size_pretty(SUM(total_size))
+					SUM(total_size)
 					FROM (
 						SELECT distinct hda.id as hda_id, d.total_size as total_size
 						FROM dataset d, history_dataset_association hda, job_to_input_dataset jtid
@@ -24,7 +24,7 @@ local_query-general-pulsar-recent() { ##?
 				) as input_size,
 				(
 					SELECT
-					pg_size_pretty(SUM(total_size))
+					SUM(total_size)
 					FROM (
 						SELECT distinct hda.id as hda_id, d.total_size as total_size
 						FROM dataset d, history_dataset_association hda, job_to_output_dataset jtod
