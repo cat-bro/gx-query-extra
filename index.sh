@@ -48,3 +48,4 @@ source $HERE/query-jobs-userdata4.sh
 source $HERE/query-oom-jobs.sh
 source $HERE/query-tool-memory.sh
 source $HERE/query-jobs-by-object-store-id.sh
+source $HERE/query-general-pulsar-recent.sh
