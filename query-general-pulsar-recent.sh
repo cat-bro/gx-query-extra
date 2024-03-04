@@ -1,4 +1,4 @@
-local_general-pulsar-recent() { ##? 
+local_query-general-pulsar-recent() { ##? 
     create_time=$1
 	handle_help "$@" <<-EOF
 
