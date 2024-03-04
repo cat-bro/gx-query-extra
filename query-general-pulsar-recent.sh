@@ -51,6 +51,5 @@ local_query-general-pulsar-recent() { ##?
 			AND j.state = 'ok'
             AND j.create_time > '$create_time'
 			ORDER BY j.update_time desc
-			LIMIT $limit
 	EOF
 }
