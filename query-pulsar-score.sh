@@ -42,7 +42,7 @@ local_query-pulsar-score() { ##? <limit>
 				) as runtime_seconds
 			FROM job j
 			WHERE position('$tool_substr' in j.tool_id)>0
-			AND j.update_time > NOW() - INTERVAL '30 days';
+			AND j.update_time > NOW() - INTERVAL '30 days'
 			AND j.state in ('ok', 'error')
 			ORDER BY j.update_time desc
 	EOF
