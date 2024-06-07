@@ -39,7 +39,8 @@ local_query-pulsar-score() { ##? <limit>
 					FROM job_metric_numeric jmn
 					WHERE jmn.metric_name = 'runtime_seconds'
 					AND jmn.job_id = j.id
-				) as runtime_seconds
+				) as runtime_seconds,
+			destination_id as destination_id
 			FROM job j
 			WHERE position('$tool_substr' in j.tool_id)>0
 			AND j.update_time > NOW() - INTERVAL '30 days'
