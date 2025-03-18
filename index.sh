@@ -52,3 +52,4 @@ source $HERE/query-general-pulsar-recent.sh
 source $HERE/query-pulsar-score.sh
 
 source $HERE/query-command.sh
+source $HERE/query-mem.sh
