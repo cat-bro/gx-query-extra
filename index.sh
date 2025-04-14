@@ -18,8 +18,6 @@ source $HERE/query-jobs-tool-and-stdout.sh
 source $HERE/query-jobs-tool-and-traceback.sh
 source $HERE/query-new-job-sizes.sh
 source $HERE/query-queued-job-sizes.sh
-source $HERE/query-job-input-datasets2.sh
-source $HERE/query-job-output-datasets.sh
 source $HERE/query-training-members.sh
 source $HERE/query-training-members2.sh
 source $HERE/query-job-time-output-sizes.sh
