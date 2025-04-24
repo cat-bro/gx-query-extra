@@ -51,3 +51,5 @@ source $HERE/query-pulsar-score.sh
 
 source $HERE/query-command.sh
 source $HERE/query-mem.sh
+
+source $HERE/query-deleted-collection-jobs-for-user.sh
