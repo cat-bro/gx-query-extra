@@ -10,9 +10,8 @@ local_query-deleted-collection-jobs-for-user() { ##? <limit>
 		SELECT
 			j.id AS job_id,
 			j.state,
+            j.tool_id as tool_id,
 			h.name AS history_name,
-			h.id AS history_id,
-			h.deleted AS history_deleted,
 			BOOL_AND(hdca.deleted) AS all_hdca_deleted
 		FROM job j
 		JOIN job_to_output_dataset jtid ON j.id = jtid.job_id
