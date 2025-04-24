@@ -23,6 +23,7 @@ local_query-deleted-collection-jobs-for-user() { ##? <limit>
 		JOIN history_dataset_collection_association hdca ON dc.id = hdca.collection_id
 		WHERE j.user_id = '$user_id'
 		AND j.state IN ('new', 'queued', 'running')
+        HAVING BOOL_AND(hdca.deleted) = TRUE
 		GROUP BY j.id, j.state, h.name, h.id, h.deleted
 		ORDER BY j.id
 		LIMIT '$limit';
