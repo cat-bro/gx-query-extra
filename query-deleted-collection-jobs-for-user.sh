@@ -1,11 +1,11 @@
-local_query-deleted-collection-jobs-for-user() { ##? <limit>
+local_query-deleted-collection-jobs-for-user() { ##? [user_id] <limit>
 	user_id="$1"
     [ ! "$1" ] && echo "Please provide a user ID" && exit 0
 	[ ! "$2" ] && limit="10000" || limit="$2"
 	handle_help "$@" <<-EOF
 
     For a user ID, output a row for each job in new, queued, running state
-    that has no non-deleted collection outputs.
+    that has no non-deleted collection outputs. Optional limit as second argument
 
     $ gxadmin local query-deleted-collection-jobs-for-user 24601 3
       job_id  |        update_time         |  state  | tool_id  | history_name | all_hdca_deleted |  latest_hdca_update_time

@@ -53,3 +53,4 @@ source $HERE/query-command.sh
 source $HERE/query-mem.sh
 
 source $HERE/query-deleted-collection-jobs-for-user.sh
+source $HERE/query-user-info.sh
