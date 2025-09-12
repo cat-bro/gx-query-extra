@@ -22,6 +22,6 @@ local_query-user-info() {
 		FROM
 			galaxy_user
 		WHERE
-			(galaxy_user.email in (users_string) or galaxy_user.username in (users_string) or galaxy_user.id::string in (users_string))
+			(galaxy_user.email in ($users_string) or galaxy_user.username in ($users_string) or galaxy_user.id::string in ($users_string))
 	EOF
 }
