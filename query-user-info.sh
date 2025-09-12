@@ -5,17 +5,16 @@ local_query-user-info() {
 
 	assert_count_ge $# 1 "No users specified"
 
-    if [[ "$1" == "-" ]]; then
-        # read users from stdin into an array
-        mapfile -t users
-    else
-        # read from $@
-        users=("$@")
-    fi
+	if [[ "$1" == "-" ]]; then
+		# read jobs from stdin
+		users=$(cat | paste -s -d' ')
+	else
+		# read from $@
+		users=$*;
+	fi
 
-    # join with "','"
-    users_string="'${users[*]// /','}'"
-    echo "$users_string"
+	# shellcheck disable=SC2068
+	users_string=$(join_by "','" ${users[@]})
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
@@ -23,6 +22,6 @@ local_query-user-info() {
 		FROM
 			galaxy_user
 		WHERE
-			(galaxy_user.email in ($users_string) or galaxy_user.username in ($users_string) or galaxy_user.id::text in ($users_string))
+			(galaxy_user.email in ('$users_string') or galaxy_user.username in ('$users_string') or galaxy_user.id::text in ('$users_string'))
 	EOF
 }
