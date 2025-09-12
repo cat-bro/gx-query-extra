@@ -14,7 +14,7 @@ local_query-user-info() {
 	fi
 
 	# shellcheck disable=SC2068
-	users_string=$(IFS=,; echo "'${users[*]// /','}'")
+	users_string=$(echo "'${users[*]// /','}'")
     echo $users_string
 
 	read -r -d '' QUERY <<-EOF
