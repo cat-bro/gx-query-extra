@@ -15,6 +15,7 @@ local_query-user-info() {
 
 	# shellcheck disable=SC2068
 	users_string=$(join_by ',' ${users[@]})
+    echo $users_string
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
