@@ -5,17 +5,17 @@ local_query-user-info() {
 
 	assert_count_ge $# 1 "No users specified"
 
-	if [[ "$1" == "-" ]]; then
-		# read users from stdin
-		users=$(cat | paste -s -d' ')
-	else
-		# read from $@
-		users=$*;
-	fi
+    if [[ "$1" == "-" ]]; then
+        # read users from stdin into an array
+        mapfile -t users
+    else
+        # read from $@
+        users=("$@")
+    fi
 
-	# shellcheck disable=SC2068
-	users_string=$(echo "'${users[*]// /','}'")
-    echo $users_string
+    # join with "','"
+    users_string="'${users[*]// /','}'"
+    echo "$users_string"
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
