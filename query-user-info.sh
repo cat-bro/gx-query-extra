@@ -14,7 +14,7 @@ local_query-user-info() {
 	fi
 
 	# shellcheck disable=SC2068
-	users_string=$(join_by ',' ${users[@]})
+	users_string=$(IFS=,; echo "'${users[*]// /','}'")
     echo $users_string
 
 	read -r -d '' QUERY <<-EOF
@@ -23,6 +23,6 @@ local_query-user-info() {
 		FROM
 			galaxy_user
 		WHERE
-			(galaxy_user.email in ('$users_string') or galaxy_user.username in ('$users_string') or galaxy_user.id::text in ('$users_string'))
+			(galaxy_user.email in ($users_string) or galaxy_user.username in ($users_string) or galaxy_user.id::text in ($users_string))
 	EOF
 }
