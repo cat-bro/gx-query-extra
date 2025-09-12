@@ -5,7 +5,7 @@ local_query-user-info() {
 
 	read -r -d '' QUERY <<-EOF
 		SELECT
-			username, id, email, create_time AT TIME ZONE 'UTC' as create_time, external, deleted, purged, active, pg_size_pretty(disk_usage)
+			username, id, email, create_time AT TIME ZONE 'UTC' as create_time, active, deleted, purged, pg_size_pretty(disk_usage) as disk_usage
 		FROM
 			galaxy_user
 		WHERE
