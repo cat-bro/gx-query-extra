@@ -53,5 +53,6 @@ source $HERE/query-command.sh
 source $HERE/query-mem.sh
 
 source $HERE/query-deleted-collection-jobs-for-user.sh
+source $HERE/query-all-deleted-collection-jobs.sh
 source $HERE/query-user-info.sh
 source $HERE/query-oom-by-tool.sh
