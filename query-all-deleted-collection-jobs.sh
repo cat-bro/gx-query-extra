@@ -1,4 +1,4 @@
-local_query-deleted-collection-jobs-for-user() { ##? <limit>
+local_query-all-deleted-collection-jobs() { ##? <limit>
 	[ ! "$1" ] && limit="10000" || limit="$1"
 	handle_help "$@" <<-EOF
 
