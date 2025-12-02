@@ -18,6 +18,8 @@ local_query-all-deleted-collection-jobs() { ##? <limit>
 			j.id AS job_id,
 			j.update_time,
 			j.state,
+			j.user_id,
+			j.handler,
 			j.tool_id as tool_id,
 			h.name AS history_name,
 			BOOL_AND(hdca.deleted) AS all_hdca_deleted,
