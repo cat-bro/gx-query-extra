@@ -56,3 +56,5 @@ source $HERE/query-deleted-collection-jobs-for-user.sh
 source $HERE/query-all-deleted-collection-jobs.sh
 source $HERE/query-user-info.sh
 source $HERE/query-oom-by-tool.sh
+
+source $HERE/query-job-outputs-by-dest.sh
