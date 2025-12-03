@@ -4,7 +4,9 @@ local_query-job-outputs-by-dest() { ##? [job_id] : Show job output datasets with
   [ ! "$2" ] && limit="50" || limit="$2"
 	handle_help "$@" <<-EOF
 	Shows recent output datasets with file_size and total size for a given destination substring
-	
+
+	EOF
+
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				hda.id AS hda_id,
