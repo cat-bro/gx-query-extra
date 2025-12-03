@@ -26,7 +26,7 @@ local_query-job-outputs-by-dest() { ##? [job_id] : Show job output datasets with
 					ON hda.id = jtod.dataset_id
 				JOIN dataset d
 					ON hda.dataset_id = d.id
-			WHERE position('arg_dest_substr' in j.destination_id)>0
+			WHERE position('$arg_dest_substr' in j.destination_id)>0
       ORDER BY j.update_time desc
 	  LIMIT $limit
 	EOF
