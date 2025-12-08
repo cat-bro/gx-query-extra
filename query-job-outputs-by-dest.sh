@@ -17,8 +17,9 @@ local_query-job-outputs-by-dest() { ##? [job_id] : Show job output datasets with
 				pg_size_pretty(d.total_size) AS total_size,
 				d.uuid as d_uuid,
 				d.object_store_id as object_store_id,
-        j.update_time as update_time,
-        j.destination_id as destination_id
+				j.id as job_id,
+				j.update_time as update_time,
+				j.destination_id as destination_id
 			FROM job j
 				JOIN job_to_output_dataset jtod
 					ON j.id = jtod.job_id
@@ -28,7 +29,7 @@ local_query-job-outputs-by-dest() { ##? [job_id] : Show job output datasets with
 					ON hda.dataset_id = d.id
 			WHERE position('$arg_dest_substr' in j.destination_id)>0
 			AND j.state = 'ok'
-			AND d.total_size >= 1073741824
+			AND d.total_size >= 10737418240
       ORDER BY j.update_time desc
 	  LIMIT $limit
 	EOF
