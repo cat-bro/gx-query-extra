@@ -24,6 +24,7 @@ local_query-tpv-errors() { ##? <limit> : Show most recent jobs with tpv error me
 			FROM job j
 			FULL OUTER JOIN galaxy_user u ON j.user_id = u.id
 			WHERE j.user_id = u.id
+			AND j.user_id != 2683
 			AND (
 				position('No destinations' in j.info)>0
 				OR position('exception while caching job destination dynamic rule' in j.info)>0
