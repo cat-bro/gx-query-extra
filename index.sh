@@ -58,3 +58,4 @@ source $HERE/query-user-info.sh
 source $HERE/query-oom-by-tool.sh
 
 source $HERE/query-job-outputs-by-dest.sh
+source $HERE/query-tpv-errors.sh
