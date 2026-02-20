@@ -26,23 +26,25 @@ local_query-kraken2-large-jobs() { ##? <limit>
 						AND hda.id = jtid.dataset_id
 					) as foo
 				) as input_size,
-				(SELECT LAST
+				(SELECT
 					pg_size_pretty(jmn.metric_value)
 					FROM job_metric_numeric jmn
 					WHERE jmn.metric_name = 'memory.max_usage_in_bytes'
 					AND jmn.job_id = j.id
+					ORDER BY jmn.id DESC LIMIT 1
 				) as job_max_mem,
-				(SELECT LAST
+				(SELECT
 					TO_CHAR((jmn.metric_value || ' second')::interval, 'HH24:MI:SS')
 					FROM job_metric_numeric jmn
 					WHERE jmn.metric_name = 'runtime_seconds'
 					AND jmn.job_id = j.id
+					ORDER BY jmn.id DESC LIMIT 1
 				) as runtime,
 				j.destination_id as destination
 			FROM job j
 			WHERE position('$tool_substr' in j.tool_id)>0
 			AND j.state in ('ok')
-      AND (SELECT LAST jmn.metric_value FROM job_metric_numeric jmn WHERE jmn.metric_name = 'galaxy_memory_mb' AND jmn.job_id = j.id) > 200000
+      AND (SELECT jmn.metric_value FROM job_metric_numeric jmn WHERE jmn.metric_name = 'galaxy_memory_mb' AND jmn.job_id = j.id ORDER BY jmn.id DESC LIMIT 1) > 200000
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
