@@ -43,7 +43,7 @@ local_query-kraken2-large-jobs() { ##? <limit>
 			FROM job j
 			WHERE position('$tool_substr' in j.tool_id)>0
 			AND j.state in ('ok')
-      AND (SELECT jmn.metric_value FROM job_metric_numeric jmn WHERE jmn.metric_name = 'galaxy_memory_mb' AND jmn.job_id = j.id ORDER BY jmn.id DESC LIMIT 1) > 200000
+      AND (SELECT jmn.metric_value FROM job_metric_numeric jmn WHERE jmn.metric_name = 'galaxy_memory_mb' AND jmn.job_id = j.id ORDER BY jmn.id DESC LIMIT 1) > 300000
 			ORDER BY j.update_time desc
 			LIMIT $limit
 	EOF
