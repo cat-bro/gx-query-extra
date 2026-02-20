@@ -13,7 +13,6 @@ local_query-kraken2-large-jobs() { ##? <limit>
 				j.update_time as updated,
 				j.state as state,
 				j.tool_version as tool_version,
-				# position('--report' in j.command_line)>0 as report_in_command,
 				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'ntasks=(\d+)'))[1] as tpv_cores,
 				(REGEXP_MATCHES(encode(j.destination_params, 'escape'), 'mem=(\d+)'))[1] as tpv_mem_mb,
 				(
