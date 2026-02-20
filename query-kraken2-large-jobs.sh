@@ -1,6 +1,6 @@
 local_query-kraken2-large-jobs() { ##? <limit>
 	tool_substr="/kraken2/kraken2/"
-	[ ! "$2" ] && limit="50" || limit="$2"
+	[ ! "$1" ] && limit="50" || limit="$1"
 	handle_help "$@" <<-EOF
 
   Getting info on kraken jobs using large databases
