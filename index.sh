@@ -61,3 +61,5 @@ source $HERE/query-job-outputs-by-dest.sh
 source $HERE/query-tpv-errors.sh
 
 source $HERE/query-kraken2-large-jobs.sh
+source $HERE/query-nonterminal-jobs-by-object-store-id.sh
+
