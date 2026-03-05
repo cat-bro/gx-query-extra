@@ -18,7 +18,7 @@ EOF
 			LEFT JOIN galaxy_user AS galaxy_session_user
 			ON galaxy_session.user_id = galaxy_session_user.id
 			WHERE galaxy_session.is_valid = 't'
-			AND galaxy_session.user IS NOT NULL
+			AND galaxy_session.user_id IS NOT NULL
 			ORDER BY galaxy_session.create_time DESC
 EOF
 }
