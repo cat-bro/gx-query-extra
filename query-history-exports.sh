@@ -20,11 +20,12 @@ local_query-history-exports() { ##? <limit> : Show most recent history exports
 	          FROM history_dataset_association hda, dataset d
 	          WHERE hda.dataset_id = d.id
 	          AND hda.history_id = h.id
-	      ) as total_size
+	      ) as total_size,
+		((CONVERT_FROM(sea.export_metadata, 'UTF8')::jsonb #>> '{}')::jsonb -> 'result_data') as result_data
 	    FROM store_export_association sea, history h
 	    WHERE sea.object_type = 'history'
 	    AND h.id = sea.object_id
 	    ORDER BY sea.create_time desc
-	    LIMIT $limit
+	    LIMIT $limit;
   EOF
 }
