@@ -27,5 +27,5 @@ local_query-history-exports() { ##? <limit> : Show most recent history exports
 		    AND h.id = sea.object_id
 		    ORDER BY sea.create_time desc
 		    LIMIT $limit;
-  EOF
+EOF
 }
