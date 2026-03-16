@@ -3,6 +3,7 @@ local_query-history-exports() { ##? <limit> : Show most recent history exports
 	handle_help "$@" <<-EOF
 
 	Show most recent history export tasks with an optional argument for number of rows returned (default 50).
+	Note that total_size is the undeleted size of the history: what was included in the export might be smaller.
 
 	$ gxadmin local query-history-exports 3
 	  id  |     create_time     |            task_uuid             | history_id | user_id | total_size |                  result_data
