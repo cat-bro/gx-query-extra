@@ -21,7 +21,7 @@ local_query-history-exports() { ##? <limit> : Show most recent history exports
 	          WHERE hda.dataset_id = d.id
 	          AND hda.history_id = h.id
 	      ) AS total_size,
-	      (CONVERT_FROM(sea.export_metadata, 'UTF8')::jsonb #>> '{}')::jsonb -> 'result_data' AS result_data
+	      ((CONVERT_FROM(sea.export_metadata, 'UTF8')::jsonb #>> '{}')::jsonb -> 'result_data') AS result_data
 	    FROM store_export_association sea, history h
 	    WHERE sea.object_type = 'history'
 	    AND h.id = sea.object_id
