@@ -8,24 +8,24 @@ local_query-history-exports() { ##? <limit> : Show most recent history exports
 	EOF
 
 	read -r -d '' QUERY <<-EOF
-	    SELECT
-	      sea.id as id,
-	      sea.create_time::timestamp(0) as create_time,
-	      sea.task_uuid as task_uuid,
-	      sea.object_id as history_id,
-	      h.user_id as user_id,
-	      (
-	        SELECT
-	          pg_size_pretty(sum(coalesce(d.total_size, d.file_size, 0)))
-	          FROM history_dataset_association hda, dataset d
-	          WHERE hda.dataset_id = d.id
-	          AND hda.history_id = h.id
-	      ) as total_size,
-		((CONVERT_FROM(sea.export_metadata, 'UTF8')::jsonb #>> '{}')::jsonb -> 'result_data') as result_data
-	    FROM store_export_association sea, history h
-	    WHERE sea.object_type = 'history'
-	    AND h.id = sea.object_id
-	    ORDER BY sea.create_time desc
-	    LIMIT $limit;
+		    SELECT
+		      sea.id as id,
+		      sea.create_time::timestamp(0) as create_time,
+		      sea.task_uuid as task_uuid,
+		      sea.object_id as history_id,
+		      h.user_id as user_id,
+		      (
+		        SELECT
+		          pg_size_pretty(sum(coalesce(d.total_size, d.file_size, 0)))
+		          FROM history_dataset_association hda, dataset d
+		          WHERE hda.dataset_id = d.id
+		          AND hda.history_id = h.id
+		      ) as total_size,
+			((CONVERT_FROM(sea.export_metadata, 'UTF8')::jsonb #>> '{}')::jsonb -> 'result_data') as result_data
+		    FROM store_export_association sea, history h
+		    WHERE sea.object_type = 'history'
+		    AND h.id = sea.object_id
+		    ORDER BY sea.create_time desc
+		    LIMIT $limit;
   EOF
 }
