@@ -64,3 +64,5 @@ source $HERE/query-kraken2-large-jobs.sh
 source $HERE/query-nonterminal-jobs-by-object-store-id.sh
 
 source $HERE/query-valid-galaxy-sessions.sh
+source $HERE/query-history-exports.sh
+
