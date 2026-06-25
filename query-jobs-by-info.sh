@@ -7,6 +7,7 @@ local_query-jobs-by-info() { ## input destination substr,  # optional limit
 	read -r -d '' QUERY <<-EOF
 			SELECT
 				j.id as job_id,
+				j.user_id as user_id,
 				j.update_time as updated,
 				j.state as state,
 				j.tool_id as tool_id,
